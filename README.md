@@ -1,118 +1,123 @@
-# Unity_TMP_TextSynchronizer
+# TMP Text Synchronizer
+
 A Unity utility that automatically synchronizes font sizes across multiple TextMeshPro (TMP) text components using Min, Max, or Average strategies.
-📋 Overview
+
+## 📋 Overview
+
 When working with dynamic UI layouts, you often need multiple text components to maintain consistent font sizes. This tool automatically calculates and applies optimal font sizes to all TMP_Text components registered under the GameObject where this component is attached, based on your chosen strategy.
 
-⚠️ Performance Warning: Font size recalculation during window resizing may cause frame drops. This tool is recommended for prototyping and development stages. Production builds will likely require more optimized strategies.
+> ⚠️ **Performance Warning**  
+> Font size recalculation during window resizing may cause frame drops. This tool is recommended for **prototyping and development stages**. Production builds will likely require more optimized strategies.
 
-✨ Key Features
+## ✨ Key Features
 
-Three Synchronization Strategies
+- **Three Synchronization Strategies**
+  - **Min**: Synchronize to the smallest calculated font size
+  - **Max**: Synchronize to the largest calculated font size
+  - **Average**: Synchronize to the average of all calculated sizes
 
-Min: Synchronize to the smallest calculated font size
-Max: Synchronize to the largest calculated font size
-Average: Synchronize to the average of all calculated sizes
+- **Auto-Sizing Integration**: Works with TextMeshPro's built-in auto-sizing feature to calculate optimal sizes
+- **Performance Optimization**: FPS limiting to prevent excessive calculations
+- **Screen Size Responsive**: Automatically updates when screen resolution changes
+- **Nested Synchronizer Support**: Handles hierarchies with multiple synchronizer components
+- **Editor Tools**: Custom inspector buttons and menu items for easy testing
 
+## 🎯 Use Cases
 
-Auto-Sizing Integration: Works with TextMeshPro's built-in auto-sizing feature to calculate optimal sizes
-Performance Optimization: FPS limiting to prevent excessive calculations
-Screen Size Responsive: Automatically updates when screen resolution changes
-Nested Synchronizer Support: Handles hierarchies with multiple synchronizer components
-Editor Tools: Custom inspector buttons and menu items for easy testing
+- **Multi-language UI**: Maintain consistent button text sizes across different languages with varying text lengths
+- **Dynamic Layouts**: Keep uniform font sizes in responsive UI panels
+- **Auto-sized Text Groups**: Synchronize multiple auto-sizing text components that need to match
+- **Prototyping**: Test various screen sizes during UI development
 
-🎯 Use Cases
+## 🚀 Installation
 
-Multi-language UI: Maintain consistent button text sizes across different languages with varying text lengths
-Dynamic Layouts: Keep uniform font sizes in responsive UI panels
-Auto-sized Text Groups: Synchronize multiple auto-sizing text components that need to match
-Prototyping: Test various screen sizes during UI development
+### Via Unity Package Manager
 
-🚀 Installation
-Via Unity Package Manager
-
-Open Window > Package Manager
-Click + → Add package from git URL...
-Enter:
-
+1. Open `Window > Package Manager`
+2. Click `+` → `Add package from git URL...`
+3. Enter:
+   ```
    https://github.com/lend-a-villin/Unity_TMP_TextSynchronizer.git
-Manual Installation
+   ```
 
-Download or clone this repository
-Copy the files into your Unity project's Assets folder
+### Manual Installation
 
-📖 Usage
-Basic Setup
+1. Download or clone this repository
+2. Copy the files into your Unity project's `Assets` folder
 
-Create or select a GameObject to manage synchronization
-Add the FontSizeSynchronizer component (Add Component > UI > TMP Text Synchronizer)
-The component will automatically find all child TMP_Text components
-Select your preferred Resize Type (Min/Max/Average)
-Click the "🔄 Synchronize Now" button in the inspector, or it will synchronize automatically at runtime
+## 📖 Usage
 
-Component Settings
-Settings
+### Basic Setup
 
-Font Size Calculation Method: Choose Min, Max, or Average strategy
-Auto Update On Screen Size Change: Enable to automatically recalculate when screen resolution changes
-Minimum Font Size: Lower bound for font size (default: 1)
-Maximum Font Size: Upper bound for font size (default: 1024)
-Force Override Nested: When enabled, ignores nested FontSizeSynchronizer components and manages all descendant texts
+1. Create or select a GameObject to manage synchronization
+2. Add the `FontSizeSynchronizer` component (`Add Component > UI > TMP Text Synchronizer`)
+3. The component will automatically find all child TMP_Text components
+4. Select your preferred **Resize Type** (Min/Max/Average)
+5. Click the **"🔄 Synchronize Now"** button in the inspector, or it will synchronize automatically at runtime
 
-Performance
+### Component Settings
 
-Max Calculation FPS: Limits how often font sizes are recalculated (1-300 FPS)
-Apply FPS Limit To Manual Calls: Also apply FPS limiting to manual SynchronizeFontSizes() calls
+**Settings**
+- **Font Size Calculation Method**: Choose Min, Max, or Average strategy
+- **Auto Update On Screen Size Change**: Enable to automatically recalculate when screen resolution changes
+- **Minimum Font Size**: Lower bound for font size (default: 1)
+- **Maximum Font Size**: Upper bound for font size (default: 1024)
+- **Force Override Nested**: When enabled, ignores nested FontSizeSynchronizer components and manages all descendant texts
 
-Debug
+**Performance**
+- **Max Calculation FPS**: Limits how often font sizes are recalculated (1-300 FPS)
+- **Apply FPS Limit To Manual Calls**: Also apply FPS limiting to manual `SynchronizeFontSizes()` calls
 
-Show Debug Logs: Enable detailed logging for troubleshooting
+**Debug**
+- **Show Debug Logs**: Enable detailed logging for troubleshooting
 
-Editor Tools
-Inspector Buttons
+### Editor Tools
 
-🔄 Synchronize Now: Immediately calculate and apply font sizes
-Current Font Size: Displays the currently synchronized font size
+**Inspector Buttons**
+- **🔄 Synchronize Now**: Immediately calculate and apply font sizes
+- **Current Font Size**: Displays the currently synchronized font size
 
-Context Menu (Right-click on component)
+**Context Menu** (Right-click on component)
+- **Synchronize Font Sizes**: Manual synchronization
+- **Show Text Components Info**: Display detailed information about all managed text components
+- **Reset to Default Settings**: Restore default settings
 
-Synchronize Font Sizes: Manual synchronization
-Show Text Components Info: Display detailed information about all managed text components
-Reset to Default Settings: Restore default settings
+**Tools Menu**
+- `Tools > TMP Text Synchronizer > Add to Selected`: Add component to selected GameObjects
+- `Tools > TMP Text Synchronizer > Remove from Selected`: Remove component from selected GameObjects
+- `Tools > TMP Text Synchronizer > Synchronize All in Scene`: Synchronize all FontSizeSynchronizer components in the scene
 
-Tools Menu
+## 🔧 How It Works
 
-Tools > TMP Text Synchronizer > Add to Selected: Add component to selected GameObjects
-Tools > TMP Text Synchronizer > Remove from Selected: Remove component from selected GameObjects
-Tools > TMP Text Synchronizer > Synchronize All in Scene: Synchronize all FontSizeSynchronizer components in the scene
+1. **Discovery**: Finds all TMP_Text components in children (excludes nested synchronizer components, can include with Force Override Nested option)
+2. **Calculation**: Temporarily enables auto-sizing on each text component to calculate optimal size
+3. **Strategy Application**: Applies Min/Max/Average strategy to all calculated sizes
+4. **Synchronization**: Disables auto-sizing and sets all text components to the target font size
 
-🔧 How It Works
+## ⚙️ Requirements
 
-Discovery: Finds all TMP_Text components in children (excludes nested synchronizer components, can include with Force Override Nested option)
-Calculation: Temporarily enables auto-sizing on each text component to calculate optimal size
-Strategy Application: Applies Min/Max/Average strategy to all calculated sizes
-Synchronization: Disables auto-sizing and sets all text components to the target font size
+- TextMeshPro package
 
-⚙️ Requirements
+## 📝 Tips
 
-TextMeshPro package
+- For best results, ensure your TMP_Text components have proper `fontSizeMin` and `fontSizeMax` values set
+- **Generally use the Min strategy** to ensure all text doesn't overflow its container
+- Use **Max** or **Average** strategies only in special situations
+- Enable **Show Debug Logs** when troubleshooting to see detailed calculation information
+- If you experience performance issues, lower **Max Calculation FPS** or disable **Auto Update On Screen Size Change**
+- **Production Builds**: For final deployment, it's recommended to disable **Auto Update On Screen Size Change** and use fixed font sizes
 
-📝 Tips
+## 🐛 Known Limitations
 
-For best results, ensure your TMP_Text components have proper fontSizeMin and fontSizeMax values set
-Generally use the Min strategy to ensure all text doesn't overflow its container
-Use Max or Average strategies only in special situations
-Enable Show Debug Logs when troubleshooting to see detailed calculation information
-If you experience performance issues, lower Max Calculation FPS or disable Auto Update On Screen Size Change
-Production Builds: For final deployment, it's recommended to disable Auto Update On Screen Size Change and use fixed font sizes
+- Performance degradation during window resizing due to font size recalculation (recommended for prototyping)
+- Nested FontSizeSynchronizer components require either `Force Override Nested` or proper hierarchy planning
+- Performance scales with the number of text components (use FPS limiting for large sets)
+- Only works with TMP_Text components (legacy Unity UI Text is not supported)
 
-🐛 Known Limitations
+## 📧 Support
 
-Performance degradation during window resizing due to font size recalculation (recommended for prototyping)
-Nested FontSizeSynchronizer components require either Force Override Nested or proper hierarchy planning
-Performance scales with the number of text components (use FPS limiting for large sets)
-Only works with TMP_Text components (legacy Unity UI Text is not supported)
-
-📧 Support
 For issues, feature requests, or questions, please open an issue on GitHub.
-📄 License
+
+## 📄 License
+
 MIT
