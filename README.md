@@ -6,8 +6,8 @@ A Unity utility that automatically synchronizes font sizes across multiple TextM
 
 When working with dynamic UI layouts, you often need multiple text components to maintain consistent font sizes. This tool automatically calculates and applies optimal font sizes to all TMP_Text components registered under the GameObject where this component is attached, based on your chosen strategy.
 
-> ⚠️ **Performance Warning**  
-> Font size recalculation during window resizing may cause frame drops. This tool is recommended for **prototyping and development stages**. Production builds will likely require more optimized strategies.
+> ⚠️ **Performance Note**  
+> Auto-update during window resizing may cause frame drops. For production builds, disable automatic updates and call `SynchronizeFontSizes()` manually at controlled moments (scene load, text changes, settings changes).
 
 ## ✨ Key Features
 
@@ -71,6 +71,44 @@ When working with dynamic UI layouts, you often need multiple text components to
 **Debug**
 - **Show Debug Logs**: Enable detailed logging for troubleshooting
 
+### Runtime Usage
+
+For production builds or dynamic scenarios, you can control synchronization programmatically:
+
+```csharp
+using UnityEngine;
+
+public class MyUIController : MonoBehaviour
+{
+    [SerializeField] private FontSizeSynchronizer textSynchronizer;
+    
+    void Start()
+    {
+        // Synchronize once when the scene loads
+        textSynchronizer.SynchronizeFontSizes();
+    }
+    
+    public void OnTextContentChanged()
+    {
+        // Re-synchronize when text content changes
+        textSynchronizer.SynchronizeFontSizes();
+    }
+    
+    public void OnResolutionChanged()
+    {
+        // Re-synchronize when user changes resolution in settings
+        textSynchronizer.SynchronizeFontSizes();
+    }
+}
+```
+
+**When to Call `SynchronizeFontSizes()`:**
+- Scene initialization (Start/OnEnable)
+- After changing text content dynamically
+- When user changes resolution in game settings
+- During loading screens (frame drops are acceptable)
+- After language changes in localized UIs
+
 ### Editor Tools
 
 **Inspector Buttons**
@@ -94,6 +132,28 @@ When working with dynamic UI layouts, you often need multiple text components to
 3. **Strategy Application**: Applies Min/Max/Average strategy to all calculated sizes
 4. **Synchronization**: Disables auto-sizing and sets all text components to the target font size
 
+## 🚀 Production Build Recommendations
+
+**For Development:**
+- ✅ Enable **Auto Update On Screen Size Change** for real-time testing across different resolutions
+- ✅ Use **Show Debug Logs** to verify behavior
+- ✅ Test with various screen sizes in the editor
+
+**For Production Builds:**
+- ⚠️ **Disable Auto Update On Screen Size Change** to prevent frame drops during window resizing
+- ✅ Call `SynchronizeFontSizes()` manually at controlled moments:
+  - Once during scene initialization (e.g., `Start()`)
+  - When text content changes (e.g., player name, level)
+  - When user changes resolution in settings menu
+  - During loading screens where frame drops are acceptable
+- ✅ Consider using **FPS limiting** if you need occasional runtime updates
+
+**Alternative Approach:**
+1. Use this tool during development to find optimal font sizes
+2. Note the calculated font size (displayed in inspector)
+3. In production, manually set that font size instead of using auto-sizing
+4. Remove the component from production builds for maximum performance
+
 ## ⚙️ Requirements
 
 - TextMeshPro package
@@ -105,11 +165,10 @@ When working with dynamic UI layouts, you often need multiple text components to
 - Use **Max** or **Average** strategies only in special situations
 - Enable **Show Debug Logs** when troubleshooting to see detailed calculation information
 - If you experience performance issues, lower **Max Calculation FPS** or disable **Auto Update On Screen Size Change**
-- **Production Builds**: For final deployment, it's recommended to disable **Auto Update On Screen Size Change** and use fixed font sizes
 
 ## 🐛 Known Limitations
 
-- Performance degradation during window resizing due to font size recalculation (recommended for prototyping)
+- Auto-update during window resizing may cause frame drops
 - Nested FontSizeSynchronizer components require either `Force Override Nested` or proper hierarchy planning
 - Performance scales with the number of text components (use FPS limiting for large sets)
 - Only works with TMP_Text components (legacy Unity UI Text is not supported)
