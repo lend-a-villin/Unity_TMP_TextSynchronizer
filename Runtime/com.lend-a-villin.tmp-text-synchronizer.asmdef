@@ -1,0 +1,16 @@
+{
+  "name": "TMPTextSynchronizer.Runtime",
+  "rootNamespace": "TMPTextSynchronizer",
+  "references": [
+    "Unity.TextMeshPro"
+  ],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [
+    {
+      "name": "com.unity.textmeshpro",
+      "expression": "3.0.0",
+      "define": "TMP_PRESENT"
+    }
+  ]
+}

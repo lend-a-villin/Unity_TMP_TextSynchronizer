@@ -1,0 +1,12 @@
+{
+  "name": "TMPTextSynchronizer.Editor", 
+  "rootNamespace": "TMPTextSynchronizer.Editor",
+  "references": [
+    "TMPTextSynchronizer.Runtime",
+    "Unity.TextMeshPro"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true
+}
