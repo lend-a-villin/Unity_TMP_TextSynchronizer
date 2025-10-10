@@ -1,6 +1,6 @@
 {
   "name": "com.lend-a-villin.tmp-text-synchronizer",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "displayName": "TMP Text Synchronizer",
   "description": "Synchronizes font sizes across multiple TMP Text components",
   "unity": "2020.3",
