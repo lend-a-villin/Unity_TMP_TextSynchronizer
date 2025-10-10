@@ -1,9 +1,13 @@
 {
   "name": "com.lend-a-villin.tmp-text-synchronizer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "TMP Text Synchronizer",
   "description": "Synchronizes font sizes across multiple TMP Text components",
   "unity": "2020.3",
+  "author": {
+    "name": "lend-a-villin",
+    "url": "https://github.com/lend-a-villin/"
+  },
   "dependencies": {
     "com.unity.textmeshpro": "3.0.6"
   },

@@ -192,11 +192,12 @@ namespace TMPTextSynchronizer
             try
             {
                 float targetFontSize = CalculateOptimalFontSize();
+                float clampedSize = Mathf.Clamp(targetFontSize, _minimumFontSize, _maximumFontSize);
 
-                if (targetFontSize < _minimumFontSize)
+                if (clampedSize != targetFontSize)
                 {
-                    LogWarning($"Calculated font size ({targetFontSize:F1}) is too small. Using minimum of {_minimumFontSize}pt instead.");
-                    targetFontSize = _minimumFontSize;
+                    LogWarning($"Calculated font size ({targetFontSize:F1}) is out of range. Clamping to {clampedSize:F1}pt (range: {_minimumFontSize}-{_maximumFontSize})");
+                    targetFontSize = clampedSize;
                 }
 
                 ApplyFontSizeToAll(targetFontSize);
