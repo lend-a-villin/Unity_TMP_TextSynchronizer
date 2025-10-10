@@ -2,6 +2,11 @@
 
 All notable changes to this package will be documented in this file.
 
+## [1.0.2] - 2025-10-10
+
+### Fixed
+- Add CHANGELOG.md.meta
+
 ## [1.0.1] - 2025-10-10
 
 ### Fixed
